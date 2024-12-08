@@ -812,7 +812,7 @@ class Function():
         self.taskWindows = tk.Tk()
         self.taskWindows.title("Task Management")
         self.taskWindows.geometry("500x450")
-        # self.tasks= []
+        self.tasks= []
 
         # Task Name
         tk.Label(
@@ -841,11 +841,8 @@ class Function():
                 "Easy",
                 "Medium",
                 "Hard"],
-            state="readonly").place(
-            x=90,
-            y=50,
-            width=150,
-            height=25)
+            state="readonly").place(x=90, y=50, width=150, height=25)
+               
 
         # Task List
         self.task_listbox = tk.Listbox(
@@ -854,14 +851,16 @@ class Function():
 
         # Force Refresh
         self.taskWindows.update()
-        # self.update_task_list()
-
+    
+    
+        
         def add_task():
             task_name = self.task_name_entry.get().strip()
             difficulty = self.difficulty_var.get()
             if task_name:
                 self.tasks.append(
                     {"task": task_name, "difficulty": difficulty, "completed": False})
+                
                 update_task_list()
                 self.task_name_entry.delete(0, tk.END)
             else:
@@ -871,10 +870,9 @@ class Function():
             self.task_listbox.delete(0, tk.END)
             for task in self.tasks:
                 status = "[Done]" if task["completed"] else "[Pending]"
-                self.task_listbox.insert(
-                    tk.END, f"{status} {
-                        task['task']} ({
-                        task['difficulty']})")
+                
+                self.task_listbox.insert(tk.END, f"{status} {task['task']} ({task['difficulty']})")
+
 
         def mark_complete():
             selected = self.task_listbox.curselection()
