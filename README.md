@@ -9,6 +9,7 @@ Rehabilitation Task Manager is a Python-based desktop application designed to ma
 - **Username and Password Authentication**:
   - Users can log in using their credentials.
   - Options to create a new account or exit the application.
+![Login Interface](logininterface.jpg)
 
 ### Main Menu
 - After logging in, users are greeted with a personalized message and provided with the following options:
@@ -20,16 +21,4 @@ Rehabilitation Task Manager is a Python-based desktop application designed to ma
   - **Export Patient Information**: Export patient data to external files for backup or sharing.
   - **Task Management**: Manage specific tasks related to patients, such as assigning rehabilitation activities.
   - **Task Progress**: Track the progress of assigned tasks for individual patients.
-
----
-
-## Installation
-
-### Prerequisites
-- **Python 3.x** installed on your system.
-- Required Python libraries:
-  - `tkinter`: For GUI development.
-  - `sqlite3`: For database management.
-  - `pandas`: For data import/export.
-  - `Pillow`: For image handling (used for GUI backgrounds or icons).
 
