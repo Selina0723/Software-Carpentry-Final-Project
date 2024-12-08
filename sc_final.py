@@ -18,9 +18,6 @@ class App():
         self.mainWindow.title('Welcome to Rehabitation Task Manager!')
         self.mainWindow.geometry('450x450')
         
-      
-
-
         self.canvas = tk.Canvas(self.mainWindow, height=450, width=450)
         self.imagefile = Image.open('bg.jpg')
         self.imagefile = ImageTk.PhotoImage(self.imagefile)
@@ -145,12 +142,7 @@ class Function():
         self.mainWindows.resizable(False,False)
         self.mainWindows.title('Function Menu')
         self.mainWindows.geometry("500x700")
-        # self.mainWindows = mainWindows
         self.tasks = []
-        
-    
-    
-        # self.load_tasks()
         self.linkSqlite3()
         self.interface()
 
@@ -180,7 +172,6 @@ class Function():
         # """
         self.cursor.execute(tabel_sql_patient)
         #self.cursor.execute(tabel_sql_task)
-        #self.conn.commit()
         print("The medical record table is created successfully!!!")
 
     def interface(self):
@@ -317,7 +308,7 @@ class Function():
         self.delWindows.title("Delete Patient Information")
         self.delWindows.geometry("500x450")  
         # Label
-        patIdLabel = tk.Label(self.delWindows, text="Number：", font=("Arial -20"))
+        patIdLabel = tk.Label(self.delWindows, text="Number:", font=("Arial -20"))
         patIdLabel.place(x=20, y=100, height=40, width=200)
         self.patIdEntry = tk.Entry(self.delWindows)  
         self.patIdEntry.place(x=230, y=100, height=40, width=200)
@@ -333,7 +324,7 @@ class Function():
             if num:  
                 self.cursor.execute("delete from patInfoTable where patId = '%s';" % patId)
                 self.conn.commit()  
-                messagebox.showinfo(title="Congratulations!", message="Successfully Delete！")
+                messagebox.showinfo(title="Congratulations!", message="Successfully Delete!")
             else:  
                 messagebox.showwarning("WARNING", message="The patient's information does not exist, please enter it first!")
 
@@ -529,13 +520,13 @@ class Function():
             tree.place(relx=0.0, rely=0.0, relwidth=1.0, relheight=1.0)
             for data in l_data:
                 tree.insert('', 'end', text='', values=data)
-        # S
+        #Select
         SelectButton = tk.Button(self.selectWindows_frame1, text="Select", font=("Arial -20"), bg="red", command=OkSelect)
         SelectButton.place(x=270, y=30, height=40, width=70)
-        # 
+        #Search
         SelectAllButton = tk.Button(self.selectWindows_frame1, text="Search All", font=("Arial -20"), bg="red", command=OkSelectAll)
         SelectAllButton.place(x=360, y=30, height=40, width=130)
-        # 
+        #Exit
         DeleteButton = tk.Button(self.selectWindows_frame1, text="Exit", font="Arial -20", bg="blue", command=self.selectWindows.destroy)
         DeleteButton.place(x=510, y=30, height=40, width=70)
         self.selectWindows.mainloop()
@@ -562,7 +553,7 @@ class Function():
                 l_row = self.cursor.fetchall()
                 for data in all_data[1:]:
                     patId = data[1]
-                    self.cursor.execute("select * from patInfoTable where stuId = '%s';" % patId)
+                    self.cursor.execute("select * from patInfoTable where patId = '%s';" % patId)
                     l_row = self.cursor.fetchall()
                     if l_row:
                         continue
@@ -570,23 +561,23 @@ class Function():
                     TypeOfDisease = data[3]
                     RecoveryTime = float(data[4])
               
-                    try:  #
-                        sql1 = "INSERT INTO patInfoTable(patId,name,TypeOfDisease, RecoveryTime)"
+                    try:  
+                        sql1 = "INSERT INTO patInfoTable(patId,name,type,recovery)"
                         sql1 += "VALUES('%s','%s','%s',%f)" % (patId,name,TypeOfDisease, RecoveryTime)
                         self.cursor.execute(sql1)  
                         self.conn.commit()  
                     except:
                         messagebox.showerror("WARNING", message = "The format of patient results information is wrong and cannot be entered!")
-                messagebox.showwarning(title="WARNING", message="If the patient number is repeated, it cannot be entered!！")
+                messagebox.showwarning(title="WARNING", message="If the patient number is repeated, it cannot be entered!!")
                 messagebox.showinfo(title="Congratulations!", message="Patient information batch entry success!")
-            except:
-                messagebox.showerror("ERROR", message="The form format is wrong, please re-select!!")
+            except Exception as e:
+                messagebox.showerror("ERROR", message=f"The form format is wrong, please re-select!!:{e}")
 
     def exportExcel(self):
         file_path = filedialog.asksaveasfilename(title="Export File", initialfile="pat_data.xlsx",
-                                             filetypes=[("Excel 工作簿", "*.xlsx")])
+                                             filetypes=[("Excel Workbook", "*.xlsx")])
         if file_path == "":
-            messagebox.showwarning("WARNING", message="Please re-export！")
+            messagebox.showwarning("WARNING", message="Please re-export!")
         else:
             workbook = openpyxl.Workbook()  
             sheet = workbook.active  
@@ -632,7 +623,7 @@ class Function():
         # Force Refresh
         self.taskWindows.update()
         #self.update_task_list()
-        # Sub-functions
+        
         def add_task():
             task_name = self.task_name_entry.get().strip()
             difficulty = self.difficulty_var.get()
@@ -678,12 +669,7 @@ class Function():
                     json.dump(self.tasks, f)
                 messagebox.showinfo("Success", "Tasks saved successfully!")
 
-        def load_tasks():
-            try:
-                with open("tasks.json", "r") as f:
-                    self.tasks = json.load(f)
-            except FileNotFoundError:
-                self.tasks = []
+    
 
         tk.Button(self.taskWindows, text="Add Task", command=add_task).place(x=300, y=10, width=100, height=25)
         tk.Button(self.taskWindows, text="Mark as Complete", command=mark_complete).place(x=10, y=250, width=150, height=25)
@@ -715,7 +701,6 @@ class Function():
     def plot_progress(self):
         self.ax.clear()  
 
-        
         total_tasks = len(self.tasks)
         completed_tasks = sum(1 for task in self.tasks if task["completed"])
         pending_tasks = total_tasks - completed_tasks
