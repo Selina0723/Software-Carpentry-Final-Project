@@ -14,13 +14,13 @@ Rehabilitation Task Manager is a Python-based desktop application designed to ma
 
 ### Main Menu
 - After logging in, users are greeted with a personalized message and provided with the following options:
-  - **Add Patient Information**: Add new patient records, including their details and rehabilitation progress.
+  - **Add Patient Information**: Add new patient records.
   - **Delete Patient Information**: Remove patient records from the database.
   - **Edit Patient Information**: Modify existing patient details.
   - **Search Patient Information**: Search for specific patient records based on various criteria.
   - **Import Patient Information**: Import patient data from external files.
   - **Export Patient Information**: Export patient data to external files for backup or sharing.
   - **Task Management**: Manage specific tasks related to patients, such as assigning rehabilitation activities.
-  - **Task Progress**: Track the progress of assigned tasks for individual patients.
+  - **Task Progress**: Check the progress of assigned tasks for individual patients.
 
 ![Main Manu](mainmanu.jpg)
