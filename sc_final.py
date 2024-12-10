@@ -862,11 +862,9 @@ class Function():
             self.task_listbox.delete(0, tk.END)
             for task in self.tasks:
                 status = "[Done]" if task["completed"] else "[Pending]"
-
                 self.task_listbox.insert(
-                    tk.END, f"{status} {
-                        task['task']} ({
-                        task['difficulty']})")
+                    tk.END, f"{status} {task['task']} ({task['difficulty']})"
+                )
 
         def mark_complete():
             selected = self.task_listbox.curselection()
@@ -995,8 +993,9 @@ class Function():
         self.mainWindows.mainloop()
 
 
-app = App()
-app.run()
-if not app.flag:
-    fun = Function()
-    fun.run()
+if __name__ == "__main__":
+    app = App()
+    app.run()
+    if not app.flag:
+        fun = Function()
+        fun.run()
